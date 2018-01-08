@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>SpringMVC</display-name>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+  
+  <listener> 
+	<listener-class> 
+	org.springframework.web.util.Log4jConfigListener 
+	</listener-class> 
+</listener> 
+  
+  <context-param>
+  	<param-name>log4j</param-name>
+  	<param-value>classpath:log4j.properties</param-value>
+  </context-param>
+  
+  <servlet>
+  	<servlet-name>springmvc</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>classpath:springmvc-servlet.xml</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>springmvc</servlet-name>
+	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+  <servlet>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <servlet-class>com.web.fileUD.FileUploadServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>FileListServlet</servlet-name>
+  	<servlet-class>com.web.fileUD.FileListServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>FileDownloadServlet</servlet-name>
+  	<servlet-class>com.web.fileUD.FileDownloadServlet</servlet-class>
+  </servlet>
+  
+  
+  <servlet-mapping>
+    <servlet-name>FileUploadServlet</servlet-name>
+    <url-pattern>/servlet/FileUploadServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FileListServlet</servlet-name>
+    <url-pattern>/servlet/FileListServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FileDownloadServlet</servlet-name>
+    <url-pattern>/servlet/FileDownloadServlet</url-pattern>
+  </servlet-mapping>
+</web-app>

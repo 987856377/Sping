@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.1.xsd    
+    	http://www.springframework.org/schema/mvc 
+    	http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.1.xsd 
+     	http://www.springframework.org/schema/aop
+     	http://www.springframework.org/schema/aop/spring-aop-4.1.xsd"
+	
+     >
+	<mvc:annotation-driven/>
+	<context:component-scan base-package="com.spring.action"/>
+	<beans>
+						<!-- scope -->
+		<!-- singleton 单列模式，spring 默认 ，即只有一个共享的实例存在，所有对 bean 的请求都会返回这个实例 -->
+		<!-- 
+			prototype 非单列模式，每次对 bean 的请求都会创建一个新的bean实例
+			 在多线程条件下必须是一个线程对应一个实例不能用 singleton ，应该用 scope="prototype" 例如在对数据库增删改查的时候要用到
+		 -->
+		 <!-- request 请求模式，在HTTP下的每次请求都会创建一个新的实例 -->
+		 <!-- session 回话模式 ，在单个HTTP生命周期中使用bean定义创建bean的新实例-->
+		 
+		 <!-- depends-on 属性 : 只在singleton模式下使用,初始化 HelloWorld 前，强制初始化 date,销毁时会先被销毁 -->
+		
+		<bean id="HelloWorld" class="com.spring.action.HelloWorld" scope="singleton" depends-on="date"> 
+			
+			<!-- 依赖注入 -->									
+			<property name="message">
+				<value>hello all my friends</value>
+			</property>
+			
+			<property name="date">	
+
+				<!-- <property name="date" value="date"> 这种做法安全性差， 在容器部署时不能验证引用的bean实际存在-->
+				<!-- <bean id="date" class="java.util.Date"/> -->
+				<!-- <ref local="date"/> 引用同一个 xml 页面中的 bean -->
+				<!-- <ref parent="date"> 允许引用当前 BeanFactory 或 ApplicationContext 的父 BeanFactory 或 ApplicationContext 中的 bean-->
+				<!-- <idref bean="date" 作用同下-->
+				<ref bean="date"/>	<!-- 允许创建对同一个容器或父容器中的任何bean的引用 -->
+						
+			</property>	
+			
+			<property name="list">
+				<list>
+					<value>hello</value>
+					<value>world</value>				
+				</list>				
+			</property>
+			
+			<property name="set">
+				<set>
+					<value>all</value>
+					<value>my</value>
+				</set>
+			</property>
+			
+			<property name="map">
+				<map>
+					<entry key="1">
+						<value>lovely</value>
+					</entry>
+					<entry key="2">
+						<value>friends</value>
+					</entry>
+				</map>
+			</property>
+			
+			<!-- 构造注入
+				<constructor-arg index="0"> index="0" 表示构造方法中的第一个参数
+					<value>hello all my friends</value>
+				</constructor-arg>
+			 -->	
+		</bean>
+		<bean id="date" class="java.util.Date"></bean>
+		
+		<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+			<property name="basename">
+				<value>messages</value>
+			</property>
+		</bean>
+		
+		<bean id="log" class="com.spring.action.Log"></bean>
+		
+		<bean id="listener" class="com.spring.action.LogListener"></bean>
+		
+		<bean id="student" class="com.spring.IoC.Student">
+			<!--
+				 默认情况下，当spring容器用<aop:scope-proxy/>元素标记的bean创建代理时将创建一个基于CGLIB的类代理
+				CGLIB代理只拦截公共方法的调用，不要使用这种代理的非公开方法；他们将不会委托给scope的目标对象
+				
+				<aop:scoped-proxy proxy-target-class="false"/>
+			 -->
+			
+			<property name="name" value="zhangsan"/>
+			<property name="age" value="21"/>
+			<property name="sex" value="man"/>
+			
+		</bean>
+		<alias name="from" alias="to"/> <!-- 给 bean 起别名 -->
+		<!-- 
+					内部类
+			<bean id="outer" class="...">
+				内部类不需要定义 id 或 name, 容器会忽略这些值，也会忽略 scope 标志
+				<property name="inner">
+					<bean class="com.example.Person">
+						<property name="name" value="fank">
+					</bean>
+				</property>		
+		 -->
+	</beans>
+	
+</beans>

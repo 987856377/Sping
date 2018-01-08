@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+      
+      
+      <!--  
+      <bean id="TimeNowImp1" class="com.spring.Imp.TimeNowImp1"/>      
+      <bean id="TimeNowImp2" class="com.spring.Imp.TimeNowImp2"/>      
+      <bean id="PrintTime" class="com.spring.aspect.PrintTime"/> 
+
+     
+      <aop:config>
+      	<aop:aspect id="printTime" ref="PrintTime">
+      		<aop:pointcut expression="execution(* com.spring.Imp.*.*(..))" id="printCurrentTime"/>
+      		<aop:pointcut expression="execution(* com.spring.intf.TimeNow.*(..))" id="printCurrentTime"/>	同上
+      		<aop:before method="beginTime" pointcut-ref="printCurrentTime"/>
+      		
+      	</aop:aspect>
+      
+      </aop:config>
+	  -->
+	  
+	  
+	<aop:aspectj-autoproxy/><!-- 启用AspectJ支持 -->
+	<bean id="whenImp1" class="com.spring.Imp.WhenImp1"/>
+	<bean id="whenImp2" class="com.spring.Imp.WhenImp2"/>
+	<bean id="inWhen" class="com.spring.aspect.InWhen"/>
+	
+</beans>
